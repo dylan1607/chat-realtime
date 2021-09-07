@@ -1,8 +1,23 @@
+import FieldValue from "@firebase/firestore/dist/lite";
 import styled from "styled-components";
+import { db } from "../firebase";
 
-const SidebarOption = ({ title, Icon }) => {
+
+const SidebarOption = ({ title, Icon, addChannelOption }) => {
+  const addChannel = () => {
+    const channelName = prompt("Please enter the name");
+    if (channelName) {
+      db.collection("rooms").add({
+        name: channelName,
+        timestamp: FieldValue.serverTimestamp(),
+      });
+    }
+  };
+  const selectChannel = () => {};
   return (
-    <SidebarOptionContainer>
+    <SidebarOptionContainer
+      onClick={addChannelOption ? addChannel : selectChannel}
+    >
       {Icon && <Icon fontSize="small" style={{ padding: 10 }} />}
       {Icon ? (
         <h3>{title}</h3>
