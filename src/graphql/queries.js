@@ -7,6 +7,11 @@ export const getRoom = /* GraphQL */ `
       id
       name
       description
+      messages {
+        message
+        user
+        userImage
+      }
       createdAt
       updatedAt
     }
@@ -23,6 +28,11 @@ export const listRooms = /* GraphQL */ `
         id
         name
         description
+        messages {
+          message
+          user
+          userImage
+        }
         createdAt
         updatedAt
       }

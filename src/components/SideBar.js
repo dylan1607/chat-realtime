@@ -26,7 +26,6 @@ const SideBar = () => {
     try {
       const roomsData = await API.graphql(graphqlOperation(listRooms));
       setRooms(roomsData?.data?.listRooms?.items);
-      console.log(roomsData);
     } catch (error) {
       console.log(error);
     }
@@ -34,6 +33,7 @@ const SideBar = () => {
   //Get data first render - Must have
   useEffect(() => {
     fetchRooms();
+    console.log("object");
   }, []);
 
   return (
@@ -62,8 +62,12 @@ const SideBar = () => {
       <SidebarOption Icon={ExpandMore} title="Channels" />
       <hr />
       <SidebarOption Icon={Add} title="Add Channels" addChannelOption />
-      {rooms.map((item) => (
-        <SidebarOption id={item.id} title={item.name} key={item.id} />
+      {rooms.map((item, index) => (
+        <SidebarOption
+          id={item.id}
+          title={item.name}
+          key={item.id ? item.id : index}
+        />
       ))}
     </SidebarContainter>
   );

@@ -7,6 +7,11 @@ export const onCreateRoom = /* GraphQL */ `
       id
       name
       description
+      messages {
+        message
+        user
+        userImage
+      }
       createdAt
       updatedAt
     }
@@ -18,6 +23,11 @@ export const onUpdateRoom = /* GraphQL */ `
       id
       name
       description
+      messages {
+        message
+        user
+        userImage
+      }
       createdAt
       updatedAt
     }
@@ -29,6 +39,11 @@ export const onDeleteRoom = /* GraphQL */ `
       id
       name
       description
+      messages {
+        message
+        user
+        userImage
+      }
       createdAt
       updatedAt
     }

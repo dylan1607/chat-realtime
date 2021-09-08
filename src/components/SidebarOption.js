@@ -9,13 +9,13 @@ const SidebarOption = ({ title, Icon, addChannelOption, id }) => {
   const dispatch = useDispatch();
   const addChannel = async () => {
     try {
-      const channelName = await prompt("Please enter the name");
+      const channelName = prompt("Please enter the name");
       if (!channelName) return;
       await API.graphql(
         graphqlOperation(createRoom, { input: { name: channelName } })
       );
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -23,12 +23,13 @@ const SidebarOption = ({ title, Icon, addChannelOption, id }) => {
     try {
       await API.graphql(graphqlOperation(deleteRoom, { input: { id: id } }));
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
-  
+
   const selectChannel = () => {
     if (id) {
+      console.log(id);
       dispatch(
         enterRoom({
           roomId: id,

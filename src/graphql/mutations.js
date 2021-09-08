@@ -10,6 +10,11 @@ export const createRoom = /* GraphQL */ `
       id
       name
       description
+      messages {
+        message
+        user
+        userImage
+      }
       createdAt
       updatedAt
     }
@@ -24,6 +29,11 @@ export const updateRoom = /* GraphQL */ `
       id
       name
       description
+      messages {
+        message
+        user
+        userImage
+      }
       createdAt
       updatedAt
     }
@@ -38,6 +48,11 @@ export const deleteRoom = /* GraphQL */ `
       id
       name
       description
+      messages {
+        message
+        user
+        userImage
+      }
       createdAt
       updatedAt
     }

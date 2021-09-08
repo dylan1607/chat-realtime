@@ -2,4 +2,11 @@ type Room @model {
   id: ID!
   name: String!
   description: String
+  messages: [Message]
+}
+
+type Message {
+  message: String
+  user: String
+  userImage: String
 }
