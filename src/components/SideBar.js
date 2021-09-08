@@ -15,8 +15,27 @@ import {
 
 import styled from "styled-components";
 import SidebarOption from "./SidebarOption";
+import { API, graphqlOperation } from "aws-amplify";
+import { listRooms } from "../graphql/queries";
+import { useState, useEffect } from "react";
 
 const SideBar = () => {
+  // fetch data from database
+  const [rooms, setRooms] = useState([]);
+  const fetchRooms = async () => {
+    try {
+      const roomsData = await API.graphql(graphqlOperation(listRooms));
+      setRooms(roomsData?.data?.listRooms?.items);
+      console.log(roomsData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  //Get data first render - Must have
+  useEffect(() => {
+    fetchRooms();
+  }, []);
+
   return (
     <SidebarContainter>
       <SidebarHeader>
@@ -42,7 +61,10 @@ const SideBar = () => {
       <hr />
       <SidebarOption Icon={ExpandMore} title="Channels" />
       <hr />
-      <SidebarOption Icon={Add} title="Add Channels" />
+      <SidebarOption Icon={Add} title="Add Channels" addChannelOption />
+      {rooms.map((item) => (
+        <SidebarOption id={item.id} title={item.name} key={item.id} />
+      ))}
     </SidebarContainter>
   );
 };

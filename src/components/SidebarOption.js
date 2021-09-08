@@ -1,19 +1,39 @@
 import styled from "styled-components";
+import { API, graphqlOperation } from "aws-amplify";
+import { createRoom, deleteRoom } from "../graphql/mutations";
+import { Delete } from "@material-ui/icons";
 
-const SidebarOption = ({ title, Icon, addChannelOption }) => {
-  const addChannel = () => {};
-  //   const channelName = prompt("Please enter the name");
+const SidebarOption = ({ title, Icon, addChannelOption, id }) => {
+  const addChannel = async () => {
+    try {
+      const channelName = await prompt("Please enter the name");
+      if (!channelName) return;
+      await API.graphql(
+        graphqlOperation(createRoom, { input: { name: channelName } })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteChannel = async () => {
+    try {
+      await API.graphql(graphqlOperation(deleteRoom, { input: { id: id } }));
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const selectChannel = () => {};
   return (
     <SidebarOptionContainer
-    //   onClick={addChannelOption ? addChannel : selectChannel}
+      onClick={addChannelOption ? addChannel : selectChannel}
     >
       {Icon && <Icon fontSize="small" style={{ padding: 10 }} />}
       {Icon ? (
         <h3>{title}</h3>
       ) : (
         <SidebarOptionChannel>
-          <span>#</span> {title}
+          <Delete onClick={deleteChannel} /># {title}
         </SidebarOptionChannel>
       )}
     </SidebarOptionContainer>
@@ -36,8 +56,16 @@ const SidebarOptionContainer = styled.div`
   > h3 {
     font-weight: 500;
   }
-  > h3 > span {
+`;
+
+const SidebarOptionChannel = styled.h3`
+  display: flex;
+  align-items: center;
+  > .MuiSvgIcon-root {
     padding: 15px;
+    :hover {
+      opacity: 0.9;
+      background-color: #340e36;
+    }
   }
 `;
-const SidebarOptionChannel = styled.div``;
