@@ -2,8 +2,11 @@ import styled from "styled-components";
 import { API, graphqlOperation } from "aws-amplify";
 import { createRoom, deleteRoom } from "../graphql/mutations";
 import { Delete } from "@material-ui/icons";
+import { useDispatch } from "react-redux";
+import { enterRoom } from "../features/appSlice";
 
 const SidebarOption = ({ title, Icon, addChannelOption, id }) => {
+  const dispatch = useDispatch();
   const addChannel = async () => {
     try {
       const channelName = await prompt("Please enter the name");
@@ -23,7 +26,15 @@ const SidebarOption = ({ title, Icon, addChannelOption, id }) => {
       console.log(error);
     }
   };
-  const selectChannel = () => {};
+  const selectChannel = () => {
+    if (id) {
+      dispatch(
+        enterRoom({
+          roomId: id,
+        })
+      );
+    }
+  };
   return (
     <SidebarOptionContainer
       onClick={addChannelOption ? addChannel : selectChannel}
