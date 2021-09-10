@@ -15,26 +15,46 @@ import {
 
 import styled from "styled-components";
 import SidebarOption from "./SidebarOption";
-import { API, graphqlOperation } from "aws-amplify";
+import { API } from "aws-amplify";
 import { listRooms } from "../graphql/queries";
+import { onCreateRoom, onDeleteRoom } from "../graphql/subscriptions";
 import { useState, useEffect } from "react";
 
 const SideBar = () => {
   // fetch data from database
   const [rooms, setRooms] = useState([]);
-  const fetchRooms = async () => {
+  //Get All Room
+  useEffect(() => {
+    subscribeRoom();
+    fetchAllRooms();
+  }, []);
+
+  const fetchAllRooms = async () => {
     try {
-      const roomsData = await API.graphql(graphqlOperation(listRooms));
-      setRooms(roomsData?.data?.listRooms?.items);
+      const roomsData = await API.graphql({
+        query: listRooms,
+      });
+      setRooms(roomsData.data.listRooms.items);
     } catch (error) {
       console.log(error);
     }
   };
-  //Get data first render - Must have
-  useEffect(() => {
-    fetchRooms();
-    console.log("object");
-  }, []);
+  const subscribeRoom = () => {
+    try {
+      API.graphql({ query: onCreateRoom }).subscribe({
+        next: (data) => {
+          fetchAllRooms();
+        },
+      });
+      API.graphql({ query: onDeleteRoom }).subscribe({
+        next: (data) => {
+          fetchAllRooms();
+        },
+      });
+    } catch (error) {
+      console.error("Missing connect");
+    }
+  };
 
   return (
     <SidebarContainter>

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { API, graphqlOperation } from "aws-amplify";
+import { API } from "aws-amplify";
 import { createRoom, deleteRoom } from "../graphql/mutations";
 import { Delete } from "@material-ui/icons";
 import { useDispatch } from "react-redux";
@@ -7,13 +7,14 @@ import { enterRoom } from "../features/appSlice";
 
 const SidebarOption = ({ title, Icon, addChannelOption, id }) => {
   const dispatch = useDispatch();
+
   const addChannel = async () => {
     try {
-      const channelName = prompt("Please enter the name");
-      if (!channelName) return;
-      await API.graphql(
-        graphqlOperation(createRoom, { input: { name: channelName } })
-      );
+      const channelName = prompt("Please enter the Channel Name !");
+      await API.graphql({
+        query: createRoom,
+        variables: { input: { name: channelName } },
+      });
     } catch (error) {
       console.error(error);
     }
@@ -21,7 +22,10 @@ const SidebarOption = ({ title, Icon, addChannelOption, id }) => {
 
   const deleteChannel = async () => {
     try {
-      await API.graphql(graphqlOperation(deleteRoom, { input: { id: id } }));
+      await API.graphql({
+        query: deleteRoom,
+        variables: { input: { id: id } },
+      });
     } catch (error) {
       console.error(error);
     }
@@ -33,6 +37,7 @@ const SidebarOption = ({ title, Icon, addChannelOption, id }) => {
       dispatch(
         enterRoom({
           roomId: id,
+          roomName: title,
         })
       );
     }

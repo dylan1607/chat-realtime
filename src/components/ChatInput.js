@@ -2,23 +2,41 @@ import styled from "styled-components";
 import { Send } from "@material-ui/icons";
 import { Button } from "@material-ui/core";
 import { useState } from "react";
+import { API } from "aws-amplify";
+import { createMessage } from "../graphql/mutations";
 
 const ChatInput = ({ channelName, channelId }) => {
-  const [input, setInput] = useState();
+  const [input, setInput] = useState("");
   const sendMessage = (e) => {
     e.preventDefault();
-
-    if (channelId) return false;
+    if (!channelId) return false;
+    addMessage();
   };
-
+  const addMessage = async () => {
+    try {
+      if (!input && !channelId) return console.log("Nothing");
+      await API.graphql({
+        query: createMessage,
+        variables: {
+          input: {
+            userID: "1",
+            payload: input,
+          },
+        },
+      });
+      setInput("");
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <ChatInputContainer>
       <form>
         <input
           type="text"
-          placeholder={`Send a message to ${channelName}`}
+          placeholder={`Send a message to #${channelName}`}
           value={input}
-          // onChange={(e) => setInput(e.target.value)}
+          onChange={(e) => setInput(e.target.value)}
         />
         <FunctionContainer>
           <Button hidden type="submit" onClick={sendMessage}>

@@ -6,11 +6,9 @@ export const onCreateRoom = /* GraphQL */ `
     onCreateRoom {
       id
       name
-      description
-      messages {
-        message
-        user
-        userImage
+      desc
+      users {
+        nextToken
       }
       createdAt
       updatedAt
@@ -22,11 +20,9 @@ export const onUpdateRoom = /* GraphQL */ `
     onUpdateRoom {
       id
       name
-      description
-      messages {
-        message
-        user
-        userImage
+      desc
+      users {
+        nextToken
       }
       createdAt
       updatedAt
@@ -38,12 +34,88 @@ export const onDeleteRoom = /* GraphQL */ `
     onDeleteRoom {
       id
       name
-      description
-      messages {
-        message
-        user
-        userImage
+      desc
+      users {
+        nextToken
       }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateUser = /* GraphQL */ `
+  subscription OnCreateUser {
+    onCreateUser {
+      id
+      roomID
+      username
+      password
+      messages {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateUser = /* GraphQL */ `
+  subscription OnUpdateUser {
+    onUpdateUser {
+      id
+      roomID
+      username
+      password
+      messages {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteUser = /* GraphQL */ `
+  subscription OnDeleteUser {
+    onDeleteUser {
+      id
+      roomID
+      username
+      password
+      messages {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateMessage = /* GraphQL */ `
+  subscription OnCreateMessage {
+    onCreateMessage {
+      id
+      userID
+      payload
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateMessage = /* GraphQL */ `
+  subscription OnUpdateMessage {
+    onUpdateMessage {
+      id
+      userID
+      payload
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteMessage = /* GraphQL */ `
+  subscription OnDeleteMessage {
+    onDeleteMessage {
+      id
+      userID
+      payload
       createdAt
       updatedAt
     }

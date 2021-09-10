@@ -1,5 +1,5 @@
 {
-  "AppSyncApiName": "myapi",
+  "AppSyncApiName": "appchat",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
   "DynamoDBEnableServerSideEncryption": false
 }

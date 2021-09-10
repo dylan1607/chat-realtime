@@ -6,11 +6,9 @@ export const getRoom = /* GraphQL */ `
     getRoom(id: $id) {
       id
       name
-      description
-      messages {
-        message
-        user
-        userImage
+      desc
+      users {
+        nextToken
       }
       createdAt
       updatedAt
@@ -27,12 +25,70 @@ export const listRooms = /* GraphQL */ `
       items {
         id
         name
-        description
-        messages {
-          message
-          user
-          userImage
-        }
+        desc
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getUser = /* GraphQL */ `
+  query GetUser($id: ID!) {
+    getUser(id: $id) {
+      id
+      roomID
+      username
+      password
+      messages {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listUsers = /* GraphQL */ `
+  query ListUsers(
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        roomID
+        username
+        password
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getMessage = /* GraphQL */ `
+  query GetMessage($id: ID!) {
+    getMessage(id: $id) {
+      id
+      userID
+      payload
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listMessages = /* GraphQL */ `
+  query ListMessages(
+    $filter: ModelMessageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        userID
+        payload
         createdAt
         updatedAt
       }

@@ -2,16 +2,24 @@ import styled from "styled-components";
 import ChatInput from "../components/ChatInput";
 import { StarBorderOutlined, InfoOutlined } from "@material-ui/icons";
 import { useSelector } from "react-redux";
-import { selectRoomId } from "../features/appSlice";
+import { selectRoomId, selectRoomName } from "../features/appSlice";
+import { API } from "aws-amplify";
+import { listMessages } from "../graphql/queries";
+
+
 const Chat = () => {
   const roomId = useSelector(selectRoomId);
+  const roomName = useSelector(selectRoomName);
+  const fetchAllMessage = async () => {
+    await API.graphql({query: listMessages})
+  }
   return (
     <ChatContainer>
       <>
         <Header>
           <HeaderLeft>
             <h4>
-              <strong>#Room-name</strong>
+              <strong>#{roomName ? roomName : "nothing"}</strong>
             </h4>
             <StarBorderOutlined />
           </HeaderLeft>
@@ -23,8 +31,9 @@ const Chat = () => {
         </Header>
 
         <ChatMessages>
-          <ChatInput channelId={roomId} />
+
         </ChatMessages>
+        <ChatInput channelId={roomId} channelName={roomName} />
       </>
     </ChatContainer>
   );

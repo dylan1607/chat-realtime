@@ -22,6 +22,7 @@ export const appSlice = createSlice({
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
       state.roomId = action.payload.roomId;
+      state.roomName = action.payload.roomName;
     },
   },
 });
@@ -32,6 +33,7 @@ export const { enterRoom } = appSlice.actions;
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 export const selectRoomId = (state) => state.app.roomId;
+export const selectRoomName = (state) => state.app.roomName;
 
 // We can also write thunks by hand, which may contain both sync and async logic.
 // Here's an example of conditionally dispatching actions based on current state.
