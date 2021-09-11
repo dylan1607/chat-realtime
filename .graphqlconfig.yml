@@ -1,6 +1,6 @@
 projects:
   realtimechat:
-    schemaPath: amplify/backend/api/realtimechat/build/schema.graphql
+    schemaPath: amplify/backend/api/chatrealtime/build/schema.graphql
     includes:
       - src/graphql/**/*.js
     excludes:
@@ -14,7 +14,7 @@ projects:
         apiId: null
         maxDepth: 4
   chatrealtime:
-    schemaPath: src/graphql/schema.json
+    schemaPath: amplify/backend/api/chatrealtime/build/schema.graphql
     includes:
       - src/graphql/**/*.js
     excludes:

@@ -18,7 +18,7 @@
     }
   },
   "auth": {
-    "chatrealtime4e75a4e4": {
+    "chatrealtime82ea6e66": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
