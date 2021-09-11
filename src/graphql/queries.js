@@ -7,10 +7,20 @@ export const getRoom = /* GraphQL */ `
       id
       name
       desc
-      users {
+      createdAt
+      messages {
+        items {
+          id
+          username
+          payload
+          createdAt
+          room {
+            nextToken
+          }
+          updatedAt
+        }
         nextToken
       }
-      createdAt
       updatedAt
     }
   }
@@ -27,40 +37,16 @@ export const listRooms = /* GraphQL */ `
         name
         desc
         createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getUser = /* GraphQL */ `
-  query GetUser($id: ID!) {
-    getUser(id: $id) {
-      id
-      roomID
-      username
-      password
-      messages {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listUsers = /* GraphQL */ `
-  query ListUsers(
-    $filter: ModelUserFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        roomID
-        username
-        password
-        createdAt
+        messages {
+          items {
+            id
+            username
+            payload
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
         updatedAt
       }
       nextToken
@@ -71,9 +57,22 @@ export const getMessage = /* GraphQL */ `
   query GetMessage($id: ID!) {
     getMessage(id: $id) {
       id
-      userID
+      username
       payload
       createdAt
+      room {
+        items {
+          id
+          name
+          desc
+          createdAt
+          messages {
+            nextToken
+          }
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }
@@ -87,9 +86,55 @@ export const listMessages = /* GraphQL */ `
     listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        userID
+        username
         payload
         createdAt
+        room {
+          items {
+            id
+            name
+            desc
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const messageByDate = /* GraphQL */ `
+  query MessageByDate(
+    $createdAt: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelMessageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    messageByDate(
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        username
+        payload
+        createdAt
+        room {
+          items {
+            id
+            name
+            desc
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
         updatedAt
       }
       nextToken

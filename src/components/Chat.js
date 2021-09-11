@@ -4,37 +4,76 @@ import { StarBorderOutlined, InfoOutlined } from "@material-ui/icons";
 import { useSelector } from "react-redux";
 import { selectRoomId, selectRoomName } from "../features/appSlice";
 import { API } from "aws-amplify";
-import { listMessages } from "../graphql/queries";
-
+import { getRoom } from "../graphql/queries";
+import { onCreateMessage } from "../graphql/subscriptions";
+import { useEffect, useState, useRef } from "react";
+import Message from "./Message";
 
 const Chat = () => {
+  const chatRef = useRef(null);
+  const [roomMessage, setRoomMessage] = useState(null);
   const roomId = useSelector(selectRoomId);
   const roomName = useSelector(selectRoomName);
   const fetchAllMessage = async () => {
-    await API.graphql({query: listMessages})
-  }
+    try {
+      const messageData = await API.graphql({
+        query: getRoom,
+        variables: {
+          id: roomId,
+        },
+      });
+      setRoomMessage(messageData.data.getRoom.messages.items);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    if (roomId === null) return;
+    fetchAllMessage();
+    API.graphql({ query: onCreateMessage }).subscribe({
+      next: (data) => {
+        // console.log(data.value.data.onCreateMessage);
+        fetchAllMessage();
+      },
+    });
+    chatRef?.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+  }, [roomId]);
   return (
     <ChatContainer>
-      <>
-        <Header>
-          <HeaderLeft>
-            <h4>
-              <strong>#{roomName ? roomName : "nothing"}</strong>
-            </h4>
-            <StarBorderOutlined />
-          </HeaderLeft>
+      {roomId && roomMessage && (
+        <>
+          <Header>
+            <HeaderLeft>
+              <h4>
+                <strong>#{roomName ? roomName : "nothing"}</strong>
+              </h4>
+              <StarBorderOutlined />
+            </HeaderLeft>
 
-          <HeaderRight>
-            <InfoOutlined />
-            <p>Details</p>
-          </HeaderRight>
-        </Header>
+            <HeaderRight>
+              <InfoOutlined />
+              <p>Details</p>
+            </HeaderRight>
+          </Header>
 
-        <ChatMessages>
-
-        </ChatMessages>
-        <ChatInput channelId={roomId} channelName={roomName} />
-      </>
+          <ChatMessages>
+            {roomMessage?.map((item) => {
+              return (
+                <Message
+                  key={item.id}
+                  message={item.payload}
+                  username={item.username}
+                  timestamp={item.createdAt}
+                />
+              );
+            })}
+            <ChatBottom ref={chatRef} />
+          </ChatMessages>
+          <ChatInput channelId={roomId} channelName={roomName} />
+        </>
+      )}
     </ChatContainer>
   );
 };
@@ -48,7 +87,13 @@ const ChatContainer = styled.div`
   margin-top: 60px;
 `;
 const Header = styled.div`
+  position: fixed;
+  top: 30;
+  left: 30;
+  width: 74%;
+  z-index: 1000;
   display: flex;
+  background-color: #ffff;
   justify-content: space-between;
   padding: 19px;
   border-bottom: 1px solid lightgray;
@@ -75,3 +120,5 @@ const HeaderRight = styled.div`
 `;
 
 const ChatMessages = styled.div``;
+
+const ChatBottom = styled.div``;

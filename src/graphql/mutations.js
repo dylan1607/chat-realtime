@@ -10,10 +10,20 @@ export const createRoom = /* GraphQL */ `
       id
       name
       desc
-      users {
+      createdAt
+      messages {
+        items {
+          id
+          username
+          payload
+          createdAt
+          room {
+            nextToken
+          }
+          updatedAt
+        }
         nextToken
       }
-      createdAt
       updatedAt
     }
   }
@@ -27,10 +37,20 @@ export const updateRoom = /* GraphQL */ `
       id
       name
       desc
-      users {
+      createdAt
+      messages {
+        items {
+          id
+          username
+          payload
+          createdAt
+          room {
+            nextToken
+          }
+          updatedAt
+        }
         nextToken
       }
-      createdAt
       updatedAt
     }
   }
@@ -44,64 +64,20 @@ export const deleteRoom = /* GraphQL */ `
       id
       name
       desc
-      users {
-        nextToken
-      }
       createdAt
-      updatedAt
-    }
-  }
-`;
-export const createUser = /* GraphQL */ `
-  mutation CreateUser(
-    $input: CreateUserInput!
-    $condition: ModelUserConditionInput
-  ) {
-    createUser(input: $input, condition: $condition) {
-      id
-      roomID
-      username
-      password
       messages {
+        items {
+          id
+          username
+          payload
+          createdAt
+          room {
+            nextToken
+          }
+          updatedAt
+        }
         nextToken
       }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateUser = /* GraphQL */ `
-  mutation UpdateUser(
-    $input: UpdateUserInput!
-    $condition: ModelUserConditionInput
-  ) {
-    updateUser(input: $input, condition: $condition) {
-      id
-      roomID
-      username
-      password
-      messages {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteUser = /* GraphQL */ `
-  mutation DeleteUser(
-    $input: DeleteUserInput!
-    $condition: ModelUserConditionInput
-  ) {
-    deleteUser(input: $input, condition: $condition) {
-      id
-      roomID
-      username
-      password
-      messages {
-        nextToken
-      }
-      createdAt
       updatedAt
     }
   }
@@ -113,9 +89,22 @@ export const createMessage = /* GraphQL */ `
   ) {
     createMessage(input: $input, condition: $condition) {
       id
-      userID
+      username
       payload
       createdAt
+      room {
+        items {
+          id
+          name
+          desc
+          createdAt
+          messages {
+            nextToken
+          }
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }
@@ -127,9 +116,22 @@ export const updateMessage = /* GraphQL */ `
   ) {
     updateMessage(input: $input, condition: $condition) {
       id
-      userID
+      username
       payload
       createdAt
+      room {
+        items {
+          id
+          name
+          desc
+          createdAt
+          messages {
+            nextToken
+          }
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }
@@ -141,9 +143,22 @@ export const deleteMessage = /* GraphQL */ `
   ) {
     deleteMessage(input: $input, condition: $condition) {
       id
-      userID
+      username
       payload
       createdAt
+      room {
+        items {
+          id
+          name
+          desc
+          createdAt
+          messages {
+            nextToken
+          }
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }

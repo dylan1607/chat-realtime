@@ -1,0 +1,22 @@
+type Room @model {
+  id: ID!
+  name: String!
+  desc: String
+  createdAt: String!
+  messages: [Message]
+    @connection(keyName: "RoomMessages", sortField: "createdAt")
+}
+
+type Message
+  @model
+  @key(
+    name: "queyMessage"
+    fields: ["createdAt"]
+    queryField: "messageByDate"
+  ) {
+  id: ID!
+  username: String!
+  payload: String!
+  createdAt: String!
+  room: [Room] @connection(keyName: "RoomMessages", sortField: "createdAt")
+}

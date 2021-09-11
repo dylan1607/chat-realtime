@@ -26,6 +26,12 @@ const SidebarOption = ({ title, Icon, addChannelOption, id }) => {
         query: deleteRoom,
         variables: { input: { id: id } },
       });
+      dispatch(
+        enterRoom({
+          roomId: null,
+          roomName: null,
+        })
+      );
     } catch (error) {
       console.error(error);
     }
@@ -33,7 +39,7 @@ const SidebarOption = ({ title, Icon, addChannelOption, id }) => {
 
   const selectChannel = () => {
     if (id) {
-      console.log(id);
+      // console.log(id);
       dispatch(
         enterRoom({
           roomId: id,

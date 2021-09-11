@@ -7,10 +7,20 @@ export const onCreateRoom = /* GraphQL */ `
       id
       name
       desc
-      users {
+      createdAt
+      messages {
+        items {
+          id
+          username
+          payload
+          createdAt
+          room {
+            nextToken
+          }
+          updatedAt
+        }
         nextToken
       }
-      createdAt
       updatedAt
     }
   }
@@ -21,10 +31,20 @@ export const onUpdateRoom = /* GraphQL */ `
       id
       name
       desc
-      users {
+      createdAt
+      messages {
+        items {
+          id
+          username
+          payload
+          createdAt
+          room {
+            nextToken
+          }
+          updatedAt
+        }
         nextToken
       }
-      createdAt
       updatedAt
     }
   }
@@ -35,55 +55,20 @@ export const onDeleteRoom = /* GraphQL */ `
       id
       name
       desc
-      users {
-        nextToken
-      }
       createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreateUser = /* GraphQL */ `
-  subscription OnCreateUser {
-    onCreateUser {
-      id
-      roomID
-      username
-      password
       messages {
+        items {
+          id
+          username
+          payload
+          createdAt
+          room {
+            nextToken
+          }
+          updatedAt
+        }
         nextToken
       }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateUser = /* GraphQL */ `
-  subscription OnUpdateUser {
-    onUpdateUser {
-      id
-      roomID
-      username
-      password
-      messages {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteUser = /* GraphQL */ `
-  subscription OnDeleteUser {
-    onDeleteUser {
-      id
-      roomID
-      username
-      password
-      messages {
-        nextToken
-      }
-      createdAt
       updatedAt
     }
   }
@@ -92,9 +77,22 @@ export const onCreateMessage = /* GraphQL */ `
   subscription OnCreateMessage {
     onCreateMessage {
       id
-      userID
+      username
       payload
       createdAt
+      room {
+        items {
+          id
+          name
+          desc
+          createdAt
+          messages {
+            nextToken
+          }
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }
@@ -103,9 +101,22 @@ export const onUpdateMessage = /* GraphQL */ `
   subscription OnUpdateMessage {
     onUpdateMessage {
       id
-      userID
+      username
       payload
       createdAt
+      room {
+        items {
+          id
+          name
+          desc
+          createdAt
+          messages {
+            nextToken
+          }
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }
@@ -114,9 +125,22 @@ export const onDeleteMessage = /* GraphQL */ `
   subscription OnDeleteMessage {
     onDeleteMessage {
       id
-      userID
+      username
       payload
       createdAt
+      room {
+        items {
+          id
+          name
+          desc
+          createdAt
+          messages {
+            nextToken
+          }
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }

@@ -10,6 +10,11 @@
       "StackName": "amplify-realtimechat-dev-02650",
       "StackId": "arn:aws:cloudformation:ap-southeast-1:769664639024:stack/amplify-realtimechat-dev-02650/cc2405c0-1000-11ec-aac9-06cf852acfb4",
       "AmplifyAppId": "dliqickbqw1qj"
+    },
+    "categories": {
+      "auth": {
+        "realtimechatad114f4f": {}
+      }
     }
   }
 }

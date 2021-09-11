@@ -19,7 +19,8 @@ const ChatInput = ({ channelName, channelId }) => {
         query: createMessage,
         variables: {
           input: {
-            userID: "1",
+            roomMessagesId: channelId,
+            username: "dylan",
             payload: input,
           },
         },
@@ -62,6 +63,7 @@ const ChatInputContainer = styled.div`
     width: 70%;
     border: 1px solid gray;
     border-radius: 8px;
+    background-color: #ffff;
   }
   > form > input {
     font-size: 1.25rem;

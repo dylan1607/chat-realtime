@@ -52,7 +52,7 @@ const SideBar = () => {
         },
       });
     } catch (error) {
-      console.error("Missing connect");
+      console.error("Lost Connection");
     }
   };
 
