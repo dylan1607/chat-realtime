@@ -2,11 +2,6 @@ import {
   Create,
   FiberManualRecord,
   InsertComment,
-  Inbox,
-  Drafts,
-  BookmarkBorder,
-  PeopleAlt,
-  Apps,
   FileCopy,
   ExpandLess,
   ExpandMore,
@@ -63,7 +58,7 @@ const SideBar = () => {
     <SidebarContainter>
       <SidebarHeader>
         <SidebarInfo>
-          <h2>HQ</h2>
+          <h3>TinCNC</h3>
           <h3>
             <FiberManualRecord />
             {username ? username : "Anonymous"}
@@ -74,11 +69,6 @@ const SideBar = () => {
 
       {/* Function */}
       <SidebarOption Icon={InsertComment} title="Threads" />
-      <SidebarOption Icon={Inbox} title="Mentions & Reactions" />
-      <SidebarOption Icon={Drafts} title="Saved Items" />
-      <SidebarOption Icon={BookmarkBorder} title="Channel Browser" />
-      <SidebarOption Icon={PeopleAlt} title="People & User Group" />
-      <SidebarOption Icon={Apps} title="Apps" />
       <SidebarOption Icon={FileCopy} title="File Browser" />
       <SidebarOption Icon={ExpandLess} title="Show less" />
       <hr />
