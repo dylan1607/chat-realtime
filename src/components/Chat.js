@@ -2,7 +2,11 @@ import styled from "styled-components";
 import ChatInput from "../components/ChatInput";
 import { StarBorderOutlined, InfoOutlined } from "@material-ui/icons";
 import { useSelector } from "react-redux";
-import { selectRoomId, selectRoomName } from "../features/appSlice";
+import {
+  selectRoomId,
+  selectRoomName,
+  selectUsername,
+} from "../features/appSlice";
 import { API } from "aws-amplify";
 import { getRoom } from "../graphql/queries";
 import { onCreateMessage } from "../graphql/subscriptions";
@@ -14,6 +18,7 @@ const Chat = () => {
   const [roomMessage, setRoomMessage] = useState(null);
   const roomId = useSelector(selectRoomId);
   const roomName = useSelector(selectRoomName);
+  const username = useSelector(selectUsername);
   const fetchAllMessage = async () => {
     try {
       const messageData = await API.graphql({
@@ -24,11 +29,11 @@ const Chat = () => {
       });
       setRoomMessage(messageData.data.getRoom.messages.items);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
   useEffect(() => {
-    if (roomId === null) return;
+    if (!roomId) return;
     fetchAllMessage();
     API.graphql({ query: onCreateMessage }).subscribe({
       next: (data) => {
@@ -71,7 +76,11 @@ const Chat = () => {
             })}
             <ChatBottom ref={chatRef} />
           </ChatMessages>
-          <ChatInput channelId={roomId} channelName={roomName} />
+          <ChatInput
+            channelId={roomId}
+            channelName={roomName}
+            username={username}
+          />
         </>
       )}
     </ChatContainer>
@@ -87,10 +96,6 @@ const ChatContainer = styled.div`
   margin-top: 60px;
 `;
 const Header = styled.div`
-  position: fixed;
-  top: 30;
-  left: 30;
-  width: 74%;
   z-index: 1000;
   display: flex;
   background-color: #ffff;
@@ -119,6 +124,8 @@ const HeaderRight = styled.div`
   }
 `;
 
-const ChatMessages = styled.div``;
+const ChatMessages = styled.div`
+  overflow-y: hidden;
+`;
 
 const ChatBottom = styled.div``;

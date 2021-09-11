@@ -5,7 +5,7 @@ import { useState } from "react";
 import { API } from "aws-amplify";
 import { createMessage } from "../graphql/mutations";
 
-const ChatInput = ({ channelName, channelId }) => {
+const ChatInput = ({ username, channelName, channelId }) => {
   const [input, setInput] = useState("");
   const sendMessage = (e) => {
     e.preventDefault();
@@ -14,13 +14,13 @@ const ChatInput = ({ channelName, channelId }) => {
   };
   const addMessage = async () => {
     try {
-      if (!input && !channelId) return console.log("Nothing");
+      if (input.length === 0 || !channelId) return;
       await API.graphql({
         query: createMessage,
         variables: {
           input: {
             roomMessagesId: channelId,
-            username: "dylan",
+            username: username,
             payload: input,
           },
         },
@@ -35,7 +35,7 @@ const ChatInput = ({ channelName, channelId }) => {
       <form>
         <input
           type="text"
-          placeholder={`Send a message to #${channelName}`}
+          placeholder={`Send to #${channelName}`}
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
@@ -61,15 +61,14 @@ const ChatInputContainer = styled.div`
     display: flex;
     flex-direction: column;
     width: 70%;
-    border: 1px solid gray;
+    border: 1px solid lightgray;
     border-radius: 8px;
     background-color: #ffff;
   }
   > form > input {
     font-size: 1.25rem;
     border: none;
-    padding: 15px;
-    margin: 5px;
+    margin: 15px;
     outline: none;
   }
 `;

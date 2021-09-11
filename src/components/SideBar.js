@@ -19,10 +19,13 @@ import { API } from "aws-amplify";
 import { listRooms } from "../graphql/queries";
 import { onCreateRoom, onDeleteRoom } from "../graphql/subscriptions";
 import { useState, useEffect } from "react";
+import { selectUsername } from "../features/appSlice";
+import { useSelector } from "react-redux";
 
 const SideBar = () => {
   // fetch data from database
   const [rooms, setRooms] = useState([]);
+  const username = useSelector(selectUsername);
   //Get All Room
   useEffect(() => {
     subscribeRoom();
@@ -36,7 +39,7 @@ const SideBar = () => {
       });
       setRooms(roomsData.data.listRooms.items);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
   const subscribeRoom = () => {
@@ -63,7 +66,7 @@ const SideBar = () => {
           <h2>HQ</h2>
           <h3>
             <FiberManualRecord />
-            Dylan
+            {username ? username : "Anonymous"}
           </h3>
         </SidebarInfo>
         <Create />
@@ -87,6 +90,7 @@ const SideBar = () => {
           id={item.id}
           title={item.name}
           key={item.id ? item.id : index}
+          username={username}
         />
       ))}
     </SidebarContainter>
@@ -115,7 +119,7 @@ const SidebarHeader = styled.div`
   border-bottom: 1px solid #49274b;
   padding: 10px;
   > .MuiSvgIcon-root {
-    padding: 8px;
+    padding: 4px;
     background-color: #ffff;
     color: #111;
     border-radius: 100%;

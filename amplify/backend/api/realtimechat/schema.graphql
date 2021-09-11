@@ -14,7 +14,6 @@ type Message
     fields: ["createdAt"]
     queryField: "messageByDate"
   ) {
-  id: ID!
   username: String!
   payload: String!
   createdAt: String!

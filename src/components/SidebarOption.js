@@ -5,9 +5,8 @@ import { Delete } from "@material-ui/icons";
 import { useDispatch } from "react-redux";
 import { enterRoom } from "../features/appSlice";
 
-const SidebarOption = ({ title, Icon, addChannelOption, id }) => {
+const SidebarOption = ({ username, title, Icon, addChannelOption, id }) => {
   const dispatch = useDispatch();
-
   const addChannel = async () => {
     try {
       const channelName = prompt("Please enter the Channel Name !");
@@ -28,6 +27,7 @@ const SidebarOption = ({ title, Icon, addChannelOption, id }) => {
       });
       dispatch(
         enterRoom({
+          username: null,
           roomId: null,
           roomName: null,
         })
@@ -39,9 +39,9 @@ const SidebarOption = ({ title, Icon, addChannelOption, id }) => {
 
   const selectChannel = () => {
     if (id) {
-      // console.log(id);
       dispatch(
         enterRoom({
+          username: username,
           roomId: id,
           roomName: title,
         })
@@ -54,7 +54,7 @@ const SidebarOption = ({ title, Icon, addChannelOption, id }) => {
     >
       {Icon && <Icon fontSize="small" style={{ padding: 10 }} />}
       {Icon ? (
-        <h3>{title}</h3>
+        <h4>{title}</h4>
       ) : (
         <SidebarOptionChannel>
           <Delete onClick={deleteChannel} /># {title}
@@ -71,7 +71,6 @@ const SidebarOptionContainer = styled.div`
   align-items: center;
   cursor: pointer;
   font-size: 12px;
-  padding-left: 2px;
 
   :hover {
     opacity: 0.9;
@@ -86,7 +85,7 @@ const SidebarOptionChannel = styled.h3`
   display: flex;
   align-items: center;
   > .MuiSvgIcon-root {
-    padding: 15px;
+    padding: 10px;
     :hover {
       opacity: 0.9;
       background-color: #340e36;

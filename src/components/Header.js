@@ -1,10 +1,17 @@
 import styled from "styled-components";
 import { Avatar } from "@material-ui/core";
-import AccessTimeIcon from "@material-ui/icons/AccessTime";
-import SearchIcon from "@material-ui/icons/Search";
-import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
+import { ExitToApp, AccessTime, Search } from "@material-ui/icons";
+import { Auth } from "aws-amplify";
 
 const Header = () => {
+  const signOut = async () => {
+    try {
+      await Auth.signOut({ global: true });
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <HeaderContainer>
       {/* Left */}
@@ -12,18 +19,18 @@ const Header = () => {
         <HeaderAvatar
         //Action
         />
-        <AccessTimeIcon />
+        <AccessTime />
       </HeaderLeft>
 
       {/* Middle */}
       <HeaderMiddle>
-        <SearchIcon />
+        <Search />
         <input type="text" placeholder="Search something" />
       </HeaderMiddle>
 
       {/* Right */}
       <HeaderRight>
-        <HelpOutlineIcon />
+        <ExitToApp onClick={signOut} />
       </HeaderRight>
     </HeaderContainer>
   );
@@ -47,10 +54,11 @@ const HeaderLeft = styled.div`
   display: flex;
   flex: 0.3;
   align-items: center;
+  justify-content: space-between;
   margin-left: 20px;
   > .MuiSvgIcon-root {
-    margin-left: auto;
-    margin-right: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
     cursor: pointer;
   }
 `;
@@ -67,14 +75,14 @@ const HeaderMiddle = styled.div`
   border-radius: 6px;
   background-color: #421f44;
   text-align: center;
-  padding: 0 50px;
+  padding: 4px 20px;
   border: 1px solid gray;
   > input {
     background-color: transparent;
     outline: none;
     border: none;
     text-align: center;
-    min-width: 30vw;
+    min-width: 20vw;
     color: white;
   }
 `;
@@ -84,7 +92,7 @@ const HeaderRight = styled.div`
   justify-content: flex-end;
   > .MuiSvgIcon-root {
     margin-left: auto;
-    margin-right: 20px;
+    margin-right: 15px;
     cursor: pointer;
   }
 `;
