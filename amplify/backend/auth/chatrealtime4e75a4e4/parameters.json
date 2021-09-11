@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "realtimechat5a7aa9f6_identitypool_5a7aa9f6",
+    "identityPoolName": "chatrealtime4e75a4e4_identitypool_4e75a4e4",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "realti5a7aa9f6",
-    "userPoolName": "realtimechat5a7aa9f6_userpool_5a7aa9f6",
+    "resourceNameTruncated": "chatre4e75a4e4",
+    "userPoolName": "chatrealtime4e75a4e4_userpool_4e75a4e4",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -32,10 +32,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "realti5a7aa9f6_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "chatre4e75a4e4_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "5a7aa9f6",
-    "resourceName": "realtimechat5a7aa9f6",
+    "sharedId": "4e75a4e4",
+    "resourceName": "chatrealtime4e75a4e4",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [

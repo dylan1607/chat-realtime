@@ -1,6 +1,6 @@
 {
   "api": {
-    "realtimechat": {
+    "chatrealtime": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "output": {
@@ -18,7 +18,7 @@
     }
   },
   "auth": {
-    "realtimechat5a7aa9f6": {
+    "chatrealtime4e75a4e4": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
